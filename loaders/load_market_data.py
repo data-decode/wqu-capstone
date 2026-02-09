@@ -4,15 +4,6 @@
 # In[2]:
 
 
-get_ipython().system('pip install nolds')
-get_ipython().system('pip install hmmlearn')
-get_ipython().system('pip install yfinance')
-get_ipython().system('pip install statsmodels')
-
-
-# In[3]:
-
-
 import yfinance as yf
 import datetime
 from numpy import *
@@ -41,9 +32,13 @@ from sklearn.preprocessing import StandardScaler
           #dfs.append(pd.read_parquet(d))
 
   #return pd.concat(dfs, ignore_index=True)
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = PROJECT_ROOT / "data" / "parquet_out"
+
 
 def load_data(start_date, end_date):
-  base_path = Path("./data/parquet_out")
+  #base_path = Path("./data/parquet_out")
+  base_path = DATA_DIR
   dfs = []
   for d in sorted(base_path.iterdir()):
       if d.is_dir() and start_date <= d.name <= end_date:
@@ -343,6 +338,28 @@ print(df_60min.groupby(df_60min.index.date).size().value_counts())
 df_60min.index.name = 'time'
 df_60min.tail()
 
+
+
+def test_data():
+    base_path = DATA_DIR
+    if not base_path.exists():
+        raise FileNotFoundError(f"Data directory not found: {base_path}")
+
+    files = list(base_path.iterdir())
+    return files
+
+def main():
+    print("I am in main")
+
 if __name__ == "__main__":
-    main()
+    #print("Running load_market_data as a script...")
+
+    try:
+        #data = test_data()
+        #print("Data loaded successfully")
+        #print(data.head() if hasattr(data, "head") else data)
+        main()
+    except Exception as e:
+        print("Error while loading data:")
+        raise
 
