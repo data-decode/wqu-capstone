@@ -6,7 +6,11 @@ Following commands need to be run to setup the project
 
 
 git clone https://github.com/data-decode/wqu-capstone.git
+
 cd wqu-capstone
+
 pip install -r requirements.txt
+
 pip install -e .
+
 jupyter notebook
